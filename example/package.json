@@ -1,0 +1,19 @@
+{
+  "name": "spectroscope-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "electron": "^13.1.8"
+  },
+  "scripts": {
+    "start": "electron .",
+    "test": "jest",
+    "link": "yarn --cwd ../ link && yarn link spectroscope"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "spectroscope": "../"
+  }
+}

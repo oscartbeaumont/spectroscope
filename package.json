@@ -1,0 +1,66 @@
+{
+  "name": "spectroscope",
+  "version": "1.0.0",
+  "description": "Test Electron applications in style",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./main": {
+      "require": "./dist/main.js",
+      "import": "./dist/main.mjs"
+    },
+    "./preload": {
+      "require": "./dist/preload.js",
+      "import": "./dist/preload.mjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "./main": ["./dist/main.d.ts"],
+      "./preload": ["./dist/preload.d.ts"]
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "author": {
+    "name": "Oscar Beaumont",
+    "email": "oscar@otbeaumont.me"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oscartbeaumont/spectroscope.git"
+  },
+  "bugs": {
+    "url": "https://github.com/oscartbeaumont/spectroscope/issues"
+  },
+  "homepage": "https://github.com/oscartbeaumont/spectroscope#readme",
+  "keywords": [
+    "electron",
+    "testing",
+    "spectroscope",
+    "testing-library",
+    "electron-testing",
+    "ui-testing"
+  ],
+  "scripts": {
+    "build": "npm-run-all --parallel build:*",
+    "build:module": "microbundle -i ./src/index.ts -o ./dist/index.js -f esm,cjs --target node --strict --generateTypes",
+    "build:submodules": "microbundle -i ./src/*.ts -o ./dist -f esm,cjs --target node --strict --generateTypes",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "echo \"Error: no linter specified\" && exit 1"
+  },
+  "dependencies": {
+    "webdriverio": "^7.9.0"
+  },
+  "peerDependencies": {
+    "electron": "13.x"
+  },
+  "devDependencies": {
+    "electron": "^13.1.8",
+    "microbundle": "^0.13.3",
+    "npm-run-all": "^4.1.5"
+  }
+}
