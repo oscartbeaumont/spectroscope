@@ -23,24 +23,15 @@ test("app renders paragraph text", async () => {
 });
 
 test("check devtools is disabled", async () => {
-  expect(
-    await app.evaluate(async (app, window, BrowserWindow) =>
-      window.webContents.isDevToolsOpened()
-    )
-  ).toBe(false);
+  expect(await app.evaluate(async (app, window, BrowserWindow) => window.webContents.isDevToolsOpened())).toBe(false);
 });
 
 test("app navigate URL", async () => {
-  const getURL = async () =>
-    app.evaluate(async (app, window, BrowserWindow) =>
-      window.webContents.getURL()
-    );
+  const getURL = async () => app.evaluate(async (app, window, BrowserWindow) => window.webContents.getURL());
 
   expect(await getURL()).toEqual(expect.stringContaining("file://"));
 
-  await app.execute(async (app, window, BrowserWindow) =>
-    window.loadURL("https://otbeaumont.me")
-  );
+  await app.execute(async (app, window, BrowserWindow) => window.loadURL("https://otbeaumont.me"));
 
   expect(await getURL()).toBe("https://otbeaumont.me/");
 });
