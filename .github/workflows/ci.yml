@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup System
+        run: sudo apt-get install xvfb
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+      - name: Use Node Modules Cache
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies for Spectroscope
+        run: yarn
+      - name: Build Spectroscope
+        run: yarn build
+      - name: Install Dependencies for Example Application
+        run: yarn --cwd ./example
+      - name: Test Example Application
+        run: xvfb-run --auto-servernum yarn --cwd ./example test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+      - name: Use Node Modules Cache
+        uses: actions/cache@v2
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install Dependencies for Spectroscope
+        run: yarn
+      - name: Lint
+        run: yarn lint
