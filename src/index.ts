@@ -44,7 +44,7 @@ export default function Application(args: ApplicationArgs): Application {
         this.browser = undefined;
       });
 
-      await new Promise((res) => setTimeout(res, args.electronStartTimeout || 1000));
+      await new Promise((res) => setTimeout(res, args.electronStartTimeout || 1800));
 
       if (this.child_process.exitCode !== null) {
         throw new Error("[Spectroscope] Error starting application!");
