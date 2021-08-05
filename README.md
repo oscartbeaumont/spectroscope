@@ -6,9 +6,10 @@
 Test your [Electron](https://www.electronjs.org/) applications in style!
 
 ## Features:
- - Simple
- - Easy to use
- - Works with Electron security features enabled unlike [Spectron](https://github.com/electron-userland/spectron/issues/693)
+
+- Simple
+- Easy to use
+- Works with Electron security features enabled unlike [Spectron](https://github.com/electron-userland/spectron/issues/693)
 
 ## Basics
 
@@ -49,7 +50,6 @@ An example of how to do this using [Jest](https://jestjs.io/) can be [found here
 ### Application
 
 You declare an application for each test that is run. This informs Spectron about the Electron application you would like to execute.
-
 
 ```javascript
 const Application = require("spectroscope");
