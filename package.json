@@ -1,6 +1,6 @@
 {
   "name": "spectroscope",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Test Electron applications in style",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
