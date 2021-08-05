@@ -1,7 +1,8 @@
-const { Application } = require("spectroscope");
+const Application = require("spectroscope");
+const path = require("path");
 
 const app = Application({
-  exec: __dirname + "/node_modules/.bin/electron",
+  exec: path.join(__dirname, "/node_modules/.bin/electron"),
   args: ["."],
   enableConsoleOutput: false,
 });

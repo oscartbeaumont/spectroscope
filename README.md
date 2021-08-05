@@ -9,6 +9,6 @@ yarn
 yarn build
 cd example/
 yarn
-yarn link
+yarn run link
 yarn test
 ```

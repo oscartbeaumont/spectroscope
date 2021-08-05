@@ -40,7 +40,7 @@ export interface Application {
   ): Promise<any>;
 }
 
-export function Application(args: ApplicationArgs): Application {
+export default function Application(args: ApplicationArgs): Application {
   return {
     debugger_port: 8055,
     async start() {
