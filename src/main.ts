@@ -7,6 +7,12 @@ if (process.env.SPECTROSCOPE_TEST === "true") {
   app.commandLine.appendSwitch("remote-debugging-port", process.env.SPECTROSCOPE_TEST_DEBUGGER_PORT || "8315");
   app.commandLine.appendSwitch("host-rules", "MAP * 127.0.0.1");
 
+  ipcMain.on("spectroscope-ready", async (event) => {
+    BrowserWindow.fromWebContents(event.sender)?.webContents.once("did-finish-load", () => {
+      console.log("[Spectroscope] Window is Ready");
+    });
+  });
+
   ipcMain.on("spectroscope-exec", async (event, arg) => {
     const evalFunc = new AsyncFunction(
       "app, window, BrowserWindow",

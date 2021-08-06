@@ -30,8 +30,12 @@ test("app navigate URL", async () => {
   const getURL = async () => app.evaluate(async (app, window, BrowserWindow) => window.webContents.getURL());
 
   expect(await getURL()).toEqual(expect.stringContaining("file://"));
-
   await app.execute(async (app, window, BrowserWindow) => window.loadURL("https://otbeaumont.me"));
-
   expect(await getURL()).toBe("https://otbeaumont.me/");
+});
+
+test("audit accessibility", async () => {
+  const results = await app.auditAccessibility();
+  results.forEach((result) => console.error(result));
+  expect(results.length).toBe(0);
 });

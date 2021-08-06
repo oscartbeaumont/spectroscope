@@ -6,4 +6,6 @@ if (process.env.SPECTROSCOPE_TEST === "true") {
   contextBridge.exposeInMainWorld("spectroscope", {
     exec: (expr: string) => ipcRenderer.sendSync("spectroscope-exec", expr),
   });
+
+  ipcRenderer.send("spectroscope-ready");
 }
