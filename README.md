@@ -1,7 +1,7 @@
 <h1 align="center">Spectroscope</h1>
 
-![NPM](https://img.shields.io/npm/v/spectroscope)
-![CI workflow](https://github.com/oscartbeaumont/spectroscope/actions/workflows/ci.yml/badge.svg)
+[![NPM](https://img.shields.io/npm/v/spectroscope)](https://www.npmjs.com/package/spectroscope)
+[![CI workflow](https://github.com/oscartbeaumont/spectroscope/actions/workflows/ci.yml/badge.svg)](https://github.com/oscartbeaumont/spectroscope/actions)
 
 Test your [Electron](https://www.electronjs.org/) applications in style!
 
@@ -16,10 +16,12 @@ Test your [Electron](https://www.electronjs.org/) applications in style!
 ### Installation
 
 ```bash
-npm install --save-dev spectroscope
+npm install spectroscope
 # Or
-yarn add --dev spectroscope
+yarn add spectroscope
 ```
+
+Installing Spectroscope as a dev dependency will cause issues with your final application unless the Spectroscope import is removed during your applications build process.
 
 ### Add Spectroscope to your application
 
