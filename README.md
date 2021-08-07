@@ -99,6 +99,15 @@ Execute must be used over Evaluate if the browser preload context were to change
 await app.execute(async (app, window, BrowserWindow) => window.loadURL("https://otbeaumont.me"));
 ```
 
+### Audit Accessibility
+
+Spectroscope is able to run [Google Chrome's Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools) to review the browser content of your application for accessibility issues.
+
+```javascript
+const results = await app.auditAccessibility();
+results.forEach((result) => console.error(result));
+```
+
 ### Known Issues
 
 - Triggering Devtools in Electron can disconnect the debugger used by Spectroscope.
