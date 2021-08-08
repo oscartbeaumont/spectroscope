@@ -23,104 +23,12 @@ yarn add spectroscope
 
 Installing Spectroscope as a dev dependency will cause issues with your final application unless the Spectroscope import is removed during your applications build process.
 
-### Add Spectroscope to your application
+Follow the guide [here](https://github.com/oscartbeaumont/spectroscope/wiki/Installation) to add Spectroscope to your existing Electron application.
 
-Add the line `require("spectroscope/main");` into your Electron application's main thread. This is the Javascript/Typescript file that is executed by the `electron` binary.
+## API Documentation
 
-Next ensure you have a preload script configured as shown below.
+You can find documentation about the available Spectroscope API [here](https://github.com/oscartbeaumont/spectroscope/wiki/API-Documentation).
 
-```javascript
-const win = new BrowserWindow({
-  webPreferences: {
-    preload: __dirname + "/preload.js", # This line here
-  },
-});
-```
+## Contributing to Spectroscope
 
-And finally add the line `require("spectroscope/preload");` to your preload script.
-
-You have successfully added the Spectroscope runtime to your application. This allows the test suite to correctly communicate with the Electron main thread. If your application was not launched using Spectroscope, the runtime code will disable itself so it does not pose a security risk.
-
-### Test your application!
-
-Now you can write tests for your application!
-
-An example of how to do this using [Jest](https://jestjs.io/) can be [found here](https://github.com/oscartbeaumont/spectroscope/blob/main/example/index.test.js). Jest is shown here but any testing framework, or regular Javascript/Typescript program would work.
-
-## Spectron Exports
-
-### Application
-
-You declare an application for each test that is run. This informs Spectron about the Electron application you would like to execute.
-
-```javascript
-const Application = require("spectroscope");
-
-const app = Application({
-  exec: path.join(__dirname, "/node_modules/.bin/electron"),
-  args: ["."],
-  enableConsoleOutput: false,
-});
-```
-
-You must `await app.start();` before beginning your test code and `await app.stop()` after completing your test code.
-
-#### $
-
-Exported from WebdriverIO. Refer to documentation [here](https://webdriver.io/docs/api/browser/$).
-
-```javascript
-const element = await app.$("#title");
-```
-
-### $$
-
-Exported from WebdriverIO. Refer to documentation [here](https://webdriver.io/docs/api/browser/$$).
-
-```javascript
-const elements = await app.$$(".title");
-```
-
-### Evaluate
-
-Evaluate runs an expression on the Electron main thread with full access to the [app](https://www.electronjs.org/docs/api/app), [window](https://www.electronjs.org/docs/api/browser-window#browserwindow) (this refers to the current BrowserWindow) and [BrowserWindow](https://www.electronjs.org/docs/api/browser-window#browserwindow) and returns the response to the test code.
-
-```javascript
-const url = await app.evaluate(async (app, window, BrowserWindow) => window.webContents.getURL());
-```
-
-### Execute
-
-Execute runs an expression on the Electron main thread with full access to the [app](https://www.electronjs.org/docs/api/app), [window](https://www.electronjs.org/docs/api/browser-window#browserwindow) (this refers to the current BrowserWindow) and [BrowserWindow](https://www.electronjs.org/docs/api/browser-window#browserwindow) and **does not** returns the response to the test code.
-
-Execute must be used over Evaluate if the browser preload context were to change, for example when navigating to a new page as shown below.
-
-```javascript
-await app.execute(async (app, window, BrowserWindow) => window.loadURL("https://otbeaumont.me"));
-```
-
-### Audit Accessibility
-
-Spectroscope is able to run [Google Chrome's Accessibility Developer Tools](https://github.com/GoogleChrome/accessibility-developer-tools) to review the browser content of your application for accessibility issues.
-
-```javascript
-const results = await app.auditAccessibility();
-results.forEach((result) => console.error(result));
-```
-
-### Known Issues
-
-- Triggering Devtools in Electron can disconnect the debugger used by Spectroscope.
-
-## Developing on Spectroscope
-
-To run and test the Spectroscope codebase use the following commands.
-
-```bash
-yarn
-yarn build
-cd example/
-yarn
-yarn run link
-yarn test
-```
+View more information [here](https://github.com/oscartbeaumont/spectroscope/wiki#to-contribute-to-spectroscope)!
