@@ -19,7 +19,7 @@ export interface Application {
   $(selector: Selector): ChainablePromiseElement<Promise<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
   $$(selector: Selector): ChainablePromiseArray<ElementArray>;
   execute(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<void>): Promise<void>;
-  evaluate(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<any>): Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  evaluate(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<unknown>): Promise<unknown>;
   auditAccessibility(ignoreWarnings?: boolean): Promise<string[]>;
 }
 
@@ -143,13 +143,7 @@ export default function Application(args: ApplicationArgs): Application {
         )})`,
       );
     },
-    async evaluate(
-      fn: (
-        app: App,
-        window: BrowserWindow,
-        BrowserWindow: BrowserWindow,
-      ) => Promise<any> /* eslint-disable-line @typescript-eslint/no-explicit-any */,
-    ) {
+    async evaluate(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<unknown>) {
       if (this.browser === undefined) throw new Error("[Spectroscope] Browser not initialised!");
       if (await this.browser.execute(`window.spectroscope === undefined`))
         throw new Error("Spectroscope not injected into Electron preload context!");
