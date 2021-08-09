@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { app, BrowserWindow } = require("electron");
 
 // Inject Spectroscope into the main thread. This will expose the main thread to the Spectroscope preload script when the electron application is started through Spectroscope.
