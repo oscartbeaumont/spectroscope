@@ -1,5 +1,5 @@
 import { spawn, ChildProcess } from "child_process";
-import { App, BrowserWindow } from "electron";
+import { App, BrowserWindow, BrowserWindow as ElectronBrowserWindow } from "electron";
 import { Browser, ChainablePromiseArray, ChainablePromiseElement, ElementArray, remote, Selector } from "webdriverio";
 import * as path from "path";
 
@@ -18,8 +18,12 @@ export interface Application {
   stop(): Promise<void>;
   $(selector: Selector): ChainablePromiseElement<Promise<any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
   $$(selector: Selector): ChainablePromiseArray<ElementArray>;
-  execute(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<void>): Promise<void>;
-  evaluate(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<unknown>): Promise<unknown>;
+  execute(
+    fn: (app: App, window: BrowserWindow, BrowserWindow: typeof ElectronBrowserWindow) => Promise<void>,
+  ): Promise<void>;
+  evaluate(
+    fn: (app: App, window: BrowserWindow, BrowserWindow: typeof ElectronBrowserWindow) => Promise<unknown>,
+  ): Promise<unknown>;
   auditAccessibility(ignoreWarnings?: boolean): Promise<string[]>;
 }
 
@@ -132,7 +136,7 @@ export default function Application(args: ApplicationArgs): Application {
 
       return this.browser.$$(selector);
     },
-    async execute(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<void>) {
+    async execute(fn: (app: App, window: BrowserWindow, BrowserWindow: typeof ElectronBrowserWindow) => Promise<void>) {
       if (this.browser === undefined) throw new Error("[Spectroscope] Browser not initialised!");
       if (await this.browser.execute(`window.spectroscope === undefined`))
         throw new Error("Spectroscope not injected into Electron preload context!");
@@ -143,7 +147,9 @@ export default function Application(args: ApplicationArgs): Application {
         )})`,
       );
     },
-    async evaluate(fn: (app: App, window: BrowserWindow, BrowserWindow: BrowserWindow) => Promise<unknown>) {
+    async evaluate(
+      fn: (app: App, window: BrowserWindow, BrowserWindow: typeof ElectronBrowserWindow) => Promise<unknown>,
+    ) {
       if (this.browser === undefined) throw new Error("[Spectroscope] Browser not initialised!");
       if (await this.browser.execute(`window.spectroscope === undefined`))
         throw new Error("Spectroscope not injected into Electron preload context!");
