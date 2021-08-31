@@ -9,7 +9,7 @@ Test your [Electron](https://www.electronjs.org/) applications in style!
 
 - Simple
 - Easy to use
-- Works with Electron security features enabled unlike [Spectron](https://github.com/electron-userland/spectron/issues/693)
+- Works with Electron security features enabled [unlike Spectron](https://github.com/electron-userland/spectron/issues/693)
 
 ## Basics
 
