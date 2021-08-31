@@ -1,6 +1,7 @@
 import { spawn, ChildProcess } from "child_process";
 import { App, BrowserWindow, BrowserWindow as ElectronBrowserWindow } from "electron";
 import { Browser, ChainablePromiseArray, ChainablePromiseElement, ElementArray, remote, Selector } from "webdriverio";
+import type { ExecResult } from "./main";
 import * as path from "path";
 
 export interface ApplicationArgs {
@@ -141,11 +142,12 @@ export default function Application(args: ApplicationArgs): Application {
       if (await this.browser.execute(`window.spectroscope === undefined`))
         throw new Error("Spectroscope not injected into Electron preload context!");
 
-      return this.browser.execute(
+      const result: ExecResult = await this.browser.execute(
         `spectroscope.exec(${JSON.stringify(
           `async (app, window, BrowserWindow) => { (${fn.toString()})(app, window, BrowserWindow); return undefined; }`,
         )})`,
       );
+      if (result.error !== undefined) throw <Error>JSON.parse(result.error);
     },
     async evaluate(
       fn: (app: App, window: BrowserWindow, BrowserWindow: typeof ElectronBrowserWindow) => Promise<unknown>,
@@ -154,7 +156,9 @@ export default function Application(args: ApplicationArgs): Application {
       if (await this.browser.execute(`window.spectroscope === undefined`))
         throw new Error("Spectroscope not injected into Electron preload context!");
 
-      return this.browser.execute(`spectroscope.exec(${JSON.stringify(fn.toString())})`);
+      const result: ExecResult = await this.browser.execute(`spectroscope.exec(${JSON.stringify(fn.toString())})`);
+      if (result.error !== undefined) throw <Error>JSON.parse(result.error);
+      return result.result;
     },
     async auditAccessibility(ignoreWarnings?: boolean): Promise<string[]> {
       interface AuditAccessibilityResult {

@@ -35,6 +35,10 @@ test("app navigate URL", async () => {
   expect(await getURL()).toBe("https://otbeaumont.me/");
 });
 
+test("confirm NODE_ENV is set correctly", async () => {
+  expect(await app.evaluate(async () => process.env.NODE_ENV)).toBe("test");
+});
+
 test("audit accessibility", async () => {
   const results = await app.auditAccessibility();
   results.forEach((result) => console.error(result));

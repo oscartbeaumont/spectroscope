@@ -1,5 +1,10 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 
+export interface ExecResult {
+  result: unknown;
+  error: string;
+}
+
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor; // eslint-disable-line
 
 if (process.env.SPECTROSCOPE_TEST === "true") {
@@ -19,6 +24,14 @@ if (process.env.SPECTROSCOPE_TEST === "true") {
       `return await (${arg})(app, window, BrowserWindow)`,
     );
 
-    event.returnValue = await evalFunc(app, BrowserWindow.fromWebContents(event.sender), BrowserWindow);
+    try {
+      event.returnValue = {
+        result: await evalFunc(app, BrowserWindow.fromWebContents(event.sender), BrowserWindow),
+      } as ExecResult;
+    } catch (error) {
+      event.returnValue = {
+        error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
+      } as ExecResult;
+    }
   });
 }
