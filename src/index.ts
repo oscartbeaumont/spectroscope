@@ -97,7 +97,7 @@ export default function Application(args: ApplicationArgs): Application {
           });
           connected = true;
         } catch (err) {
-          if (err.errno === "ECONNREFUSED") {
+          if ((err as any)?.errno === "ECONNREFUSED" /* eslint-disable-line @typescript-eslint/no-explicit-any */) {
             console.error(
               "[Spectroscope] Error connecting to application debugger. Are you sure you imported Spectroscope into the Electron main process?",
             );
