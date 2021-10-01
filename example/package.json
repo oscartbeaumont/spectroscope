@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "electron": "^13.4.0"
+    "electron": "^13.5.1"
   },
   "scripts": {
     "start": "electron .",
