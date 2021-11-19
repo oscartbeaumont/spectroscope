@@ -1,3 +1,5 @@
+*I have ended development on this project in favor of using [Playwright](https://playwright.dev)*
+
 <h1 align="center">Spectroscope</h1>
 
 [![NPM](https://img.shields.io/npm/v/spectroscope)](https://www.npmjs.com/package/spectroscope)
